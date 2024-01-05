@@ -5,17 +5,12 @@ import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
 
 //create your first component
 const Home = () => {
-	const [usuarioinput, setUsuarioInput] = useState();
+	
 	const [valorinput, setValorInput] = useState("");
 	const [porhacer, setPorhacer] = useState([""]);
 
 	//Creando usuario
 
-	const handleUsuario = (e) => {
-		if (e.code === "Enter") {
-			crearUsuario();
-		}
-	};
 	const crearUsuario = async () => {
 		console.log("creando usuario");
 		try {
@@ -40,12 +35,9 @@ const Home = () => {
 			console.log("Error creando usuario:", error)
 		}
 	};
-	//input usuario
-	const handleInputUsuario = (e) => {
-		if (e.code === "Enter") {
-			obtenerData();
-		}
-	};
+
+	//METODO GET
+
 	const obtenerData = () => {
 		console.log("consultando datos")
 		fetch('https://playground.4geeks.com/apis/fake/todos/user/rosangelM', {
@@ -71,7 +63,6 @@ const Home = () => {
 				console.log(error);
 			});
 	}
-
 	useEffect(() => {
 		obtenerData()
 	},[])
@@ -93,15 +84,15 @@ const Home = () => {
 				//Aquí es donde debe comenzar tu código después de que finalice la búsqueda
 				console.log(data); //esto imprimirá en la consola el objeto exacto recibido del servidor
 			})
-
 			.catch(error => {
 				//manejo de errores
 				console.log(error);
 			});
-	}
+	};
 	const deleteTarea = (index) => {
-		const nuevaTarea = porhacer.filter((texto, i) => i !== index)
+		const nuevaTarea = porhacer.filter((_,i) => i !== index)
 		setPorhacer(nuevaTarea);
+		agregarTarea();
 	}
 	const handleChange = (e) => {
 		setValorInput(e.target.value);
@@ -114,14 +105,6 @@ const Home = () => {
 	return (
 		<div className="List">
 			<div>
-				<input
-					type="text"
-					onKeyDown={(e) => handleUsuario(e)}
-					value={usuarioinput}
-					onChange={(e) => setUsuarioInput(e.target.value)}
-					placeholder="Username"
-				/>
-				<button onClick={obtenerData}>Crear</button>
 			</div>
 			<h1>My To Do List</h1>
 			<ul>
@@ -136,13 +119,12 @@ const Home = () => {
 							handleOnKeydown(e);
 						}}>
 					</input>
-					<button onClick={() => agregarTarea()}>Add task</button>
+				
 				</li>
-				{porhacer.map((tarea, index) => {
+				{porhacer.map((texto, index) => {
 					return (
-						<li>{tarea.label}<button onClick={() => deleteTarea(index)}><FontAwesomeIcon icon={faTrashCan} /></button>
+						<li>{texto.label}<button onClick={() => deleteTarea(index)}><FontAwesomeIcon icon={faTrashCan} /></button>
 						</li>
-
 					)
 				})}
 			</ul>
@@ -152,3 +134,6 @@ const Home = () => {
 };
 
 export default Home;
+//<button onClick={() => agregarTarea()}>Add task</button>
+
+//<button onClick={obtenerData}>Crear</button>
