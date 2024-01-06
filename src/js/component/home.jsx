@@ -7,7 +7,7 @@ import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
 const Home = () => {
 	
 	const [valorinput, setValorInput] = useState("");
-	const [porhacer, setPorhacer] = useState([""]);
+	const [porhacer, setPorhacer] = useState([]);
 
 	//Creando usuario
 
@@ -52,7 +52,7 @@ const Home = () => {
 			.then(data => {
 				//Aquí es donde debe comenzar tu código después de que finalice la búsqueda
 				console.log(data); //esto imprimirá en la consola el objeto exacto recibido del servidor
-				if (data.msg) {
+				if (data.msg== "The user rosangelM doesn't exists")  {
 					crearUsuario()
 				} else {
 					setPorhacer(data)
@@ -66,10 +66,10 @@ const Home = () => {
 	useEffect(() => {
 		obtenerData()
 	},[])
-	const agregarTarea = () => {
+	const agregarTarea = (tareas) => {
 		fetch('https://playground.4geeks.com/apis/fake/todos/user/rosangelM', {
 			method: "PUT",
-			body: JSON.stringify(porhacer),
+			body: JSON.stringify(tareas),
 			headers: {
 				"Content-Type": "application/json"
 			}
@@ -77,10 +77,10 @@ const Home = () => {
 			.then(resp => {
 				console.log(resp.ok); // Será true (verdad) si la respuesta es exitosa.
 				console.log(resp.status); // el código de estado = 200 o código = 400 etc.
-				console.log(resp.text()); // Intentará devolver el resultado exacto como cadena (string)
+				//console.log(resp.text()); // Intentará devolver el resultado exacto como cadena (string)
 				return resp.json(); // (regresa una promesa) will try to parse the result as json as return a promise that you can .then for results
 			})
-			.then(data => {
+			.then((data) => {
 				//Aquí es donde debe comenzar tu código después de que finalice la búsqueda
 				console.log(data); //esto imprimirá en la consola el objeto exacto recibido del servidor
 			})
@@ -92,14 +92,19 @@ const Home = () => {
 	const deleteTarea = (index) => {
 		const nuevaTarea = porhacer.filter((_,i) => i !== index)
 		setPorhacer(nuevaTarea);
-		agregarTarea();
+		agregarTarea(nuevaTarea);
 	}
 	const handleChange = (e) => {
-		setValorInput(e.target.value);
+		setValorInput({label:e.target.value, done:false});
 	}
 	const handleOnKeydown = (e) => {
+		console.log(valorinput)
+		console.log(porhacer)
+
 		if (e.code === "Enter") {
-			setPorhacer([valorinput, ...porhacer]);
+			const auxiliarTask = [valorinput, ...porhacer]
+			setPorhacer(auxiliarTask);
+			agregarTarea(auxiliarTask)
 		}
 	}
 	return (
