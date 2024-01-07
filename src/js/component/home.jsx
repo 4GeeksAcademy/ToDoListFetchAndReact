@@ -89,6 +89,16 @@ const Home = () => {
 				console.log(error);
 			});
 	};
+	const eliminarTarea = () => { fetch("https://playground.4geeks.com/apis/fake/todos/user/rosangelM", {
+		method: "DELETE",
+		headers: {
+			"content-type": "application/json",
+
+		},
+	})
+	setPorhacer([])
+	crearUsuario()
+}
 	const deleteTarea = (index) => {
 		const nuevaTarea = porhacer.filter((_,i) => i !== index)
 		setPorhacer(nuevaTarea);
@@ -101,7 +111,7 @@ const Home = () => {
 		console.log(valorinput)
 		console.log(porhacer)
 
-		if (e.code === "Enter") {
+		if (e.keycode === "Enter") {
 			const auxiliarTask = [valorinput, ...porhacer]
 			setPorhacer(auxiliarTask);
 			agregarTarea(auxiliarTask)
@@ -124,11 +134,14 @@ const Home = () => {
 							handleOnKeydown(e);
 						}}>
 					</input>
-				
+					<div className= "Delete">
+				<button onClick={() => (eliminarTarea())}>Delete All</button>
+				</div>
 				</li>
+				
 				{porhacer.map((texto, index) => {
 					return (
-						<li>{texto.label}<button onClick={() => deleteTarea(index)}><FontAwesomeIcon icon={faTrashCan} /></button>
+						<li key ={index}>{texto.label}<button onClick={() => deleteTarea(index)}><FontAwesomeIcon icon={faTrashCan} /></button>
 						</li>
 					)
 				})}
@@ -139,6 +152,3 @@ const Home = () => {
 };
 
 export default Home;
-//<button onClick={() => agregarTarea()}>Add task</button>
-
-//<button onClick={obtenerData}>Crear</button>

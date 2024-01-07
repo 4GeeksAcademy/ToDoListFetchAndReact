@@ -36,3 +36,6 @@ li{
     display: flex;
     justify-content: center;
 }
+button{
+    border-bottom: 100px;
+}
