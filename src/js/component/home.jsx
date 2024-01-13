@@ -108,10 +108,12 @@ const Home = () => {
 		setValorInput({label:e.target.value, done:false});
 	}
 	const handleOnKeydown = (e) => {
+		
 		console.log(valorinput)
 		console.log(porhacer)
+		console.log(e.key)
 
-		if (e.keycode === "Enter") {
+		if (e.key === "Enter") {
 			const auxiliarTask = [valorinput, ...porhacer]
 			setPorhacer(auxiliarTask);
 			agregarTarea(auxiliarTask)
@@ -127,11 +129,12 @@ const Home = () => {
 					<input
 						type="text"
 						placeholder="What needs to be done?"
-						onChange={(e) => {
+						onChange={(e) => { 
 							handleChange(e);
 						}}
 						onKeyDown={(e) => {
 							handleOnKeydown(e);
+
 						}}>
 					</input>
 					<div className= "Delete">
