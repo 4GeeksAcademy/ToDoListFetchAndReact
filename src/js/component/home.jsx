@@ -113,7 +113,7 @@ const Home = () => {
 		console.log(porhacer)
 		console.log(e.key)
 
-		if (e.key === "Enter") {
+		if (e.key === "Enter" && e.target.vale != "") {
 			const auxiliarTask = [valorinput, ...porhacer]
 			setPorhacer(auxiliarTask);
 			agregarTarea(auxiliarTask)
@@ -134,7 +134,6 @@ const Home = () => {
 						}}
 						onKeyDown={(e) => {
 							handleOnKeydown(e);
-
 						}}>
 					</input>
 					<div className= "Delete">
