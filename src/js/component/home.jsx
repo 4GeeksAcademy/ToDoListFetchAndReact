@@ -113,7 +113,7 @@ const Home = () => {
 		console.log(porhacer)
 		console.log(e.key)
 
-		if (e.key === "Enter" && e.target.vale != "") {
+		if (e.key === "Enter" && e.target.value != "") {
 			const auxiliarTask = [valorinput, ...porhacer]
 			setPorhacer(auxiliarTask);
 			agregarTarea(auxiliarTask)
@@ -129,6 +129,7 @@ const Home = () => {
 					<input
 						type="text"
 						placeholder="What needs to be done?"
+				
 						onChange={(e) => { 
 							handleChange(e);
 						}}
