@@ -7,7 +7,7 @@ import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
 const Home = () => {
 	
 	const [valorinput, setValorInput] = useState("");
-	const [porhacer, setPorhacer] = useState([]);
+	const [porhacer, setPorhacer] = useState([""]);
 
 	//Creando usuario
 
