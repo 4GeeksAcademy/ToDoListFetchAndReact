@@ -7,14 +7,14 @@ import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
 const Home = () => {
 	
 	const [valorinput, setValorInput] = useState("");
-	const [porhacer, setPorhacer] = useState([""]);
+	const [porhacer, setPorhacer] = useState([]);
 
 	//Creando usuario
 
 	const crearUsuario = async () => {
 		console.log("creando usuario");
 		try {
-			const url = 'https://playground.4geeks.com/apis/fake/todos/user/rosangelM'
+			const url = 'https://playground.4geeks.com/todo/users/RosangelM'
 			const response = await fetch(url, {
 				method: "POST",
 				headers: {
@@ -40,7 +40,7 @@ const Home = () => {
 
 	const obtenerData = () => {
 		console.log("consultando datos")
-		fetch('https://playground.4geeks.com/apis/fake/todos/user/rosangelM', {
+		fetch('https://playground.4geeks.com/todo/users/RosangelM', {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json"
@@ -54,9 +54,7 @@ const Home = () => {
 				console.log(data); //esto imprimirá en la consola el objeto exacto recibido del servidor
 				if (data.msg== "The user rosangelM doesn't exists")  {
 					crearUsuario()
-				} else {
-					setPorhacer(data)
-				}
+				} 
 			})
 			.catch(error => {
 				//manejo de errores
@@ -67,7 +65,7 @@ const Home = () => {
 		obtenerData()
 	},[])
 	const agregarTarea = (tareas) => {
-		fetch('https://playground.4geeks.com/apis/fake/todos/user/rosangelM', {
+		fetch('https://playground.4geeks.com/todo/todos/38', {
 			method: "PUT",
 			body: JSON.stringify(tareas),
 			headers: {
@@ -89,7 +87,7 @@ const Home = () => {
 				console.log(error);
 			});
 	};
-	const eliminarTarea = () => { fetch("https://playground.4geeks.com/apis/fake/todos/user/rosangelM", {
+	const eliminarTarea = () => { fetch("https://playground.4geeks.com/todo/todos/38", {
 		method: "DELETE",
 		headers: {
 			"content-type": "application/json",
@@ -116,7 +114,8 @@ const Home = () => {
 		if (e.key === "Enter" && e.target.value != "") {
 			const auxiliarTask = [valorinput, ...porhacer]
 			setPorhacer(auxiliarTask);
-			agregarTarea(auxiliarTask)
+			agregarTarea(auxiliarTask);
+			setValorInput("");
 		}
 	}
 	return (
@@ -129,14 +128,18 @@ const Home = () => {
 					<input
 						type="text"
 						placeholder="What needs to be done?"
-				
+						name="label"
 						onChange={(e) => { 
 							handleChange(e);
+					
 						}}
+					
 						onKeyDown={(e) => {
+							console.log(e)
 							handleOnKeydown(e);
 						}}>
 					</input>
+					
 					<div className= "Delete">
 				<button onClick={() => (eliminarTarea())}>Delete All</button>
 				</div>
